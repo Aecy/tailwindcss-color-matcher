@@ -56,11 +56,14 @@ export default function Home() {
         </form>
 
         {result && (
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg space-y-4">
+          <div
+            className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg space-y-4 transform transition-all duration-300 ease-in-out opacity-0 scale-95"
+            style={{ animation: "fadeIn 0.3s forwards" }}
+          >
             <div className="flex items-center gap-4">
               <div
                 className="w-16 h-16 rounded-lg shadow-inner"
-                style={{backgroundColor: result.hex}}
+                style={{ backgroundColor: result.hex }}
               />
               <div>
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
@@ -76,6 +79,7 @@ export default function Home() {
             </div>
           </div>
         )}
+
       </div>
     </div>
   );
