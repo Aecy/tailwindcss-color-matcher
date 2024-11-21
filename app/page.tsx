@@ -21,7 +21,7 @@ export default function Home() {
   };
 
   return (
-    <main className="py-12 px-4">
+    <div className="py-12 px-4">
       <div className="max-w-md mx-auto space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-6xl font-bold text-slate-900 dark:text-slate-100">
@@ -74,14 +74,9 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
-              <code className="text-sm bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded">
-                className="bg-{result.colorName}-{result.shade}"
-              </code>
-            </div>
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }
