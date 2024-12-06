@@ -1,7 +1,15 @@
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {Search} from "lucide-react";
 import React from "react";
+import type {Metadata} from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: 'About - TailwindCSS Color Matcher',
+  description: 'TailwindCSS Color Matcher is a simple web application that lets you easily find a tailwindcss colour class with a given hexadecimal.',
+  openGraph: {
+    title: 'About - TailwindCSS Color Matcher',
+    description: 'TailwindCSS Color Matcher is a simple web application that lets you easily find a tailwindcss colour class with a given hexadecimal.',
+  }
+};
 
 export default function Page() {
   return (
@@ -31,7 +39,7 @@ export default function Page() {
             For this project, I used <span
             className="bg-blue-600 text-white px-2 py-0.5 inline-block -skew-y-3">TypeScript</span>
             , <span className="bg-zinc-950 text-white px-2 py-0.5 inline-block -skew-y-3">Next.js</span> and <span className="bg-tailwind text-white px-2 py-0.5 inline-block -skew-y-3">TailwindCSS</span>, which allowed me to simplify development and
-            deploy quickly thanks to <a href="https://vercel.com/" className="underline">Vercel</a>.
+            deploy quickly thanks to <Link href="https://vercel.com/" className="underline" target="_blank">Vercel</Link>.
           </p>
         </div>
         <div className="space-y-6">
@@ -39,7 +47,7 @@ export default function Page() {
             Open source
           </h1>
           <p className="text-xl text-slate-600 dark:text-slate-400">
-            This project is open-source on GitHub.
+            This project is open-source on <Link href="https://github.com/Aecy/tailwindcss-color-matcher" className="underline" target="_blank">GitHub</Link>.
           </p>
         </div>
       </div>

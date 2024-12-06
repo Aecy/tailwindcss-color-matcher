@@ -1,16 +1,18 @@
 import './globals.css';
 import type {Metadata} from 'next';
-import {Space_Grotesk, Bricolage_Grotesque} from 'next/font/google';
+import {Bricolage_Grotesque} from 'next/font/google';
 import Footer from "@/components/footer";
 import {cn} from "@/lib/utils";
 import React from "react";
 
-const spaceGrotesk = Space_Grotesk({subsets: ['latin']});
 const bricolageGrotesque = Bricolage_Grotesque({subsets: ['latin']});
 
 export const metadata: Metadata = {
   title: 'TailwindCSS Color Matcher',
   description: 'Get easily the tailwindcss color from hexadecimal color',
+  authors: [
+    {name: 'Maved', url: 'https://maved.fr/'},
+  ]
 };
 
 export default function RootLayout({
