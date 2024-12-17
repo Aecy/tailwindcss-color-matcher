@@ -346,11 +346,111 @@ export function hexToRgb(hex: string): { r: number; g: number; b: number } | nul
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
-      }
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16),
+    }
     : null;
+}
+
+export function hexToHsl(hex: string): { h: number, s: number, l: number } {
+  const r = parseInt(hex.substring(1, 3), 16) / 255;
+  const g = parseInt(hex.substring(3, 5), 16) / 255;
+  const b = parseInt(hex.substring(5, 7), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+
+  let h = 0;
+  if (delta !== 0) {
+    if (max === r) {
+      h = ((g - b) / delta) % 6;
+    } else if (max === g) {
+      h = (b - r) / delta + 2;
+    } else {
+      h = (r - g) / delta + 4;
+    }
+  }
+
+  h = Math.round(h * 60);
+  if (h < 0) h += 360;
+
+  const l = (max + min) / 2;
+  const s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+
+  return { h, s: s * 100, l: l * 100 };
+}
+
+export function generateShades(hsl: { h: number; s: number; l: number }): { [key: string]: string } {
+  const shades: { [key: string]: string } = {};
+  const lightnessSteps = [95, 85, 70, 50, 40, 30, 20, 10];
+
+  lightnessSteps.forEach((lightness, index) => {
+    const { h, s } = hsl;
+    shades[`${(index + 1) * 100}`] = `hsl(${h}, ${s}%, ${lightness}%)`;
+  });
+
+  return shades;
+}
+
+export function hslToHex(hsl: string): string {
+  const hslRegex = /hsl\(([\d.]+),\s*([\d.]+)%?,\s*([\d.]+)%?\)/i;
+  const match = hsl.match(hslRegex);
+
+  if (!match) {
+    throw new Error("Invalid HSL format. Expected 'hsl(h, s%, l%)'.");
+  }
+
+  const h = parseFloat(match[1]);
+  const s = parseFloat(match[2]);
+  const l = parseFloat(match[3]);
+
+  return convertHslToHex(h, s, l);
+}
+
+export function convertHslToHex(h: number, s: number, l: number): string {
+  s /= 100;
+  l /= 100;
+
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = l - c / 2;
+
+  let r = 0, g = 0, b = 0;
+
+  if (0 <= h && h < 60) {
+    r = c;
+    g = x;
+    b = 0;
+  } else if (60 <= h && h < 120) {
+    r = x;
+    g = c;
+    b = 0;
+  } else if (120 <= h && h < 180) {
+    r = 0;
+    g = c;
+    b = x;
+  } else if (180 <= h && h < 240) {
+    r = 0;
+    g = x;
+    b = c;
+  } else if (240 <= h && h < 300) {
+    r = x;
+    g = 0;
+    b = c;
+  } else if (300 <= h && h < 360) {
+    r = c;
+    g = 0;
+    b = x;
+  }
+
+  const toHex = (value: number) =>
+    Math.round((value + m) * 255)
+      .toString(16)
+      .padStart(2, '0');
+
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
 export function findClosestTailwindColor(hex: string): { colorName: string; shade: string; hex: string } | null {
